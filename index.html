@@ -3,375 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game_Hacker</title>
+    <title>➳🦈•WHO🦈°᭄☆</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', monospace;
-            background: url('https://iphoneswallpapers.com/wp-content/uploads/2023/09/Black-Wolf-iPhone-Wallpaper-4K.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #0567e0;
+            font-family: 'Orbitron', sans-serif;
+            background: #11070d;
+            overflow: hidden;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
         }
-        .container, .player-screen, .login-screen, .winner-screen, .number-screen {
-            display: none;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #7652d1;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            color: #d63601;
-            width: 400px;
-            box-shadow: 0 0 15px 5px #c00404;
-            transition: all 0.3s ease-in-out;
-        }
-        .active {
-            display: block;
-        }
-        button {
-            background: #d10303;
-            color: #000;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin: 20px 0;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 0 10px #ff1500;
-            transition: all 0.2s ease-in-out;
-        }
-        button:hover {
-            background: #cc0000;
-            box-shadow: 0 0 20px #cc0000f3;
-        }
-        select, input {
+
+        /* Particle Background */
+        #particles-js {
+            position: absolute;
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 2px solid #0a9393;
-            border-radius: 10px;
-            background: #111;
-            color: #e01b05;
-            font-size: 18px;
+            height: 100%;
+            z-index: 1;
         }
-        .premium {
-            background: #111;
-            color: #d70f08;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #df2b02;
-        }
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px #c72103;
-        }
-        .result {
-            font-size: 24px;
-            color: #FF4500;
-            font-weight: bold;
-            text-shadow: 0 0 10px #FF4500;
-        }
-        .hacker-text {
-            font-size: 20px;
-            color: #FF00FF;
-            font-style: italic;
-            text-shadow: 0 0 10px #FF00FF;
-        }
-      
-        .loading {
-            display: none;
-            font-size: 20px;
-            color: #cf1905;
-            font-weight: bold;
+
+        /* Container Styling */
+        .container {
             text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(201, 3, 171, 0.85);
+            box-shadow: 0px 0px 20px rgba(35, 236, 4, 0.8);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            z-index: 2;
         }
-        .warning {
-            font-size: 18px;
-            color: #FF6347;
-            margin-top: 20px;
+
+        h1 {
+            font-size: 2.5rem;
+            color: #76d904;
+            text-shadow: 0 0 10px #f6062e, 0 0 20px #0210d8;
         }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            border: 2px solid #aedf0f;
+            background: #09d6d3;
+            color: #68bb15;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #d40101;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            background: #ebeb04;
+            color: #000000;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #0420c1;
+        }
+
+        .error {
+            color: #ff3333;
+            font-weight: bold;
+        }
+
+        .processing {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            color: #ffcc00;
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 15px;
+            background: rgba(15, 200, 12, 0.816);
+            border-radius: 10px;
+            border: 2px solid #00ffcc;
+            display: none;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 255, 255, 0.3);
+            border-top-color: #00ffcc;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .isaka-container {
+            display: none;
+            background-color: #222222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .isaka-container h2 {
+            color: #ffcc00;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-screen active" id="loginScreen">
-        <h1 class="header">Please Login</h1>
-        <input type="password" id="loginPassword" placeholder="Enter Password" />
-        <button onclick="login()">Login</button>
-        <p id="loginError" class="warning"></p>
-    </div>
 
-    <!-- Main Container -->
-    <div class="container" id="mainContainer">
-        <h1 class="header">I_Am_Who</h1>
-        <button onclick="goToBigSmall()">Big/Small Prediction</button>
-        <button onclick="goToNumberPrediction()">Number Prediction</button>
-    </div>
+    <div id="particles-js"></div>
 
-    <!-- Player Screen for Big/Small Prediction -->
-    <div class="player-screen" id="playerScreen">
-        <h1 class="header">Big/Small Prediction</h1>
-        <div class="premium">
-            <h2>I_AM_Who</h2>
-            <p id="textview1Player">Loading...</p>
-            <p id="textview2Player">00:00</p>
+    <!-- Login & Main Content Container -->
+    <div class="container" id="container">
+
+        <div id="loginContainer">
+            <h1>꧁♕⚘LOGIN⚘♕꧂</h1>
+            <input type="text" id="username" placeholder="Enter Username">
+            <br>
+            <input type="password" id="password" placeholder="Enter Password">
+            <br>
+            <button onclick="validateLogin()">Login</button>
+            <div id="loginError" class="error"></div>
         </div>
-        <button onclick="checkBigSmallResult()">Check Big/Small Result</button>
-        <p id="resultPlayer" class="result"></p>
-        <p id="warningPlayer" class="warning"></p>
-        <button onclick="goBackToMain()">Back to Main</button>
-    </div>
 
-    <!-- Winner Screen -->
-    <div class="winner-screen" id="winnerScreen">
-        <h1 class="header">Winner Prediction</h1>
-        <div class="premium">
-            <h2>Winner Results</h2>
-            <p id="textview1Winner">Loading...</p>
-            <p id="textview2Winner">00:00</p>
+        <div id="toolContainer" style="display: none;">
+            <h1>【ﾠIﾠ→AMﾠぬWHOﾠ】</h1>
+            <input type="text" id="winning_data" placeholder="Enter 5 winning data " maxlength="5">
+            <br>
+            <button onclick="getPrediction()">Predict</button>
+            <div id="processing" class="processing" style="display: none;">
+                Processing your prediction... <div class="loader"></div>
+            </div>
+            <div id="resultBox" class="result-box">
+                <h2>Prediction:</h2>
+                <div id="result"></div>
+            </div>
+            <div id="error" class="error"></div>
         </div>
-        <button onclick="checkWinnerResult()">Check Big/Small Result</button>
-        <p id="resultWinner" class="result"></p>
-        <button onclick="goBackToMain()">Back to Main</button>
-    </div>
 
-    <!-- Number Prediction Screen -->
-    <div class="number-screen" id="numberScreen">
-        <h1 class="header">Number Prediction</h1>
-        <div class="premium">
-            <h2>Enter Password to Predict Number</h2>
-            <input type="password" id="passwordInput" placeholder="Enter Password">
-            <button onclick="checkPassword()">Enter</button>
-            <p id="textview1Number">Loading...</p>
-            <p id="textview2Number">00:00</p>
+        <div class="isaka-container" id="isakaContainer">
+            <h2>DON'T USE IN DRAGON TREND AND PLAY WITH LEVEL</h2>
+            <p>Here we can explain how the predictions work, including trends and patterns.</p>
+            <button onclick="toggleIsaka()">Close Details</button>
         </div>
-        <p id="resultNumber" class="result"></p>
-        <p><a href="https://t.me/+SBuJGoDTV9g0ZmM9" target="_blank">CLICK_TO_JOIN_FREE_HACKS</a></p>
-        <button onclick="goBackToMain()">Back to Main</button>
+
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
     <script>
-        let lastPeriodNumber = null;
-        let lastResult = null;
-        let numberPrediction = null;
+        // Particle JS configuration for enhanced matrix background with five colors
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00ffcc"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#00ffcc"
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00ffcc",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    }
+                }
+            },
+            "retina_detect": true
+        });
 
-        let patterns = [
-            ["BIG", "BIG", "SMALL", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "SMALL", "BIG", "BIG", "BIG", "BIG", "SMALL", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "BIG", "BIG", "BIG", "SMALL", "SMALL", "SMALL", "BIG", "BIG"],
-            ["SMALL", "BIG", "BIG", "BIG", "SMALL", "SMALL", "BIG", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "BIG", "BIG", "SMALL", "SMALL", "BIG", "BIG", "SMALL", "BIG", "BIG", "BIG", "SMALL", "SMALL", "BIG"],
-            ["BIG", "SMALL", "SMALL", "BIG", "SMALL", "BIG", "BIG", "SMALL", "BIG", "SMALL", "BIG", "BIG", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "BIG", "BIG"]
-        ];
+        // Login Validation
+        function validateLogin() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-        let timer = setInterval(updateTimers, 1000);
-
-        function updateTimers() {
-            const now = new Date();
-            const startHour = 5;
-            const startMinute = 30;
-            const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), startHour, startMinute, 0);
-            const elapsedMillis = now - startTime;
-            const elapsedSeconds = Math.max(0, Math.floor(elapsedMillis / 1000));
-            const totalPeriods = Math.floor(elapsedSeconds / 30);
-            const upcomingPeriod = totalPeriods + 1;
-
-            const formattedDate = now.toISOString().split('T')[0].replace(/-/g, '');
-            const periodNumber = "100005" + String(upcomingPeriod).padStart(4, '0');
-            const textview1Content = formattedDate + periodNumber;
-
-            const remainingSeconds = 30 - (elapsedSeconds % 30);
-            const textview2Content = `00:${String(remainingSeconds).padStart(2, '0')}`;
-
-            document.getElementById("textview1Player").textContent = textview1Content;
-            document.getElementById("textview2Player").textContent = textview2Content;
-
-            document.getElementById("textview1Winner").textContent = textview1Content;
-            document.getElementById("textview2Winner").textContent = textview2Content;
-
-            document.getElementById("textview1Number").textContent = textview1Content;
-            document.getElementById("textview2Number").textContent = textview2Content;
-        }
-
-        function login() {
-            const password = document.getElementById("loginPassword").value;
-            if (password === "0011") {
-                document.getElementById("loginScreen").classList.remove("active");
-                document.getElementById("mainContainer").classList.add("active");
+            if (username === "HACKER@12" && password === "RUDRA@12") {
+                document.getElementById("loginContainer").style.display = "none";
+                document.getElementById("toolContainer").style.display = "block";
+                document.getElementById("isakaContainer").style.display = "block"; // Show Isaka page
             } else {
-                document.getElementById("loginError").textContent = "Invalid Password! Please try again.";
+                document.getElementById("loginError").textContent = "Invalid Username or Password!";
             }
         }
 
-        function goToBigSmall() {
-            document.getElementById("mainContainer").classList.remove("active");
-            document.getElementById("playerScreen").classList.add("active");
-        }
+        // Prediction Logic
+        function getPrediction() {
+            const input = document.getElementById("winning_data").value.trim();
+            const processing = document.getElementById("processing");
+            const resultBox = document.getElementById("resultBox");
+            const result = document.getElementById("result");
+            const error = document.getElementById("error");
 
-        function goToNumberPrediction() {
-            document.getElementById("mainContainer").classList.remove("active");
-            document.getElementById("numberScreen").classList.add("active");
-        }
+            error.textContent = "";
+            resultBox.style.display = "none";
 
-        function goBackToMain() {
-            document.getElementById("playerScreen").classList.remove("active");
-            document.getElementById("winnerScreen").classList.remove("active");
-            document.getElementById("numberScreen").classList.remove("active");
-            document.getElementById("mainContainer").classList.add("active");
-        }
-
-        function checkBigSmallResult() {
-            if (lastPeriodNumber === "1000050001") {
-                document.getElementById("warningPlayer").textContent = "Warning: Period Number hasn't changed.";
+            if (input.length !== 5 || isNaN(input)) {
+                error.textContent = "Please enter exactly 5 numeric digits.";
                 return;
             }
 
-            const trend = patterns[Math.floor(Math.random() * patterns.length)];
-            const result = trend[Math.floor(Math.random() * trend.length)];
-            lastResult = result;
-            document.getElementById("resultPlayer").textContent = result;
-            lastPeriodNumber = "1000050001";
+            processing.style.display = "block";
+
+            setTimeout(() => {
+                processing.style.display = "none";
+
+                const numbers = input.split("").map(Number);
+                const lastDigit = numbers[numbers.length - 1];
+                const type = lastDigit >= 5 ? "BIG" : "SMALL";
+                const color = lastDigit % 5 === 0 ? "VIOLET" : 
+                             [1, 3, 5].includes(lastDigit) ? "GREEN" : 
+                             [2, 4].includes(lastDigit) ? "RED" : "BLUE";
+                const predictions = [lastDigit, (lastDigit + 2) % 10];
+
+                result.innerHTML = 
+                    `<strong>Type:</strong> ${type} <br>
+                    <strong>Color:</strong> ${color} <br>
+                    <strong>Predicted Numbers:</strong> ${predictions.join(", ")}
+                `;
+                resultBox.style.display = "block";
+            }, 3000);
         }
 
-  
-        // Function to calculate the sum of digits of a number
-function calculateDigitSum(number) {
-    return number.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-}
-
-// Function to get the next predicted number based on jackpot number
-function getNextPredictedNumber(lastJackpotNumber) {
-    let predictedNumber;
-    
-    switch (lastJackpotNumber) {
-        case 1:
-            predictedNumber = 2;
-            break;
-        case 2:
-            predictedNumber = 1;
-            break;
-        case 3:
-            predictedNumber = 4;
-            break;
-        case 4:
-            predictedNumber = 3;
-            break;
-        case 5:
-            predictedNumber = 0;
-            break;
-        case 0:
-            predictedNumber = 4;
-            break;
-        case 6:
-            predictedNumber = 1;
-            break;
-        case 7:
-            predictedNumber = 2;
-            break;
-        case 8:
-            predictedNumber = 3;
-            break;
-        case 9:
-            predictedNumber = 1;
-            break;
-        default:
-            predictedNumber = "Invalid number"; // If an invalid number is entered
-            break;
-    }
-
-    return predictedNumber;
-}
- // Function to calculate the sum of digits of a number
-function calculateDigitSum(number) {
-    return number.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-}
-
-// Function to get the next predicted number based on jackpot number
-function getNextPredictedNumber(lastJackpotNumber) {
-    let predictedNumber;
-    
-    switch (lastJackpotNumber) {
-        case 1:
-            predictedNumber = 2;
-            break;
-        case 2:
-            predictedNumber = 1;
-            break;
-        case 3:
-            predictedNumber = 4;
-            break;
-        case 4:
-            predictedNumber = 3;
-            break;
-        case 5:
-            predictedNumber = 0;
-            break;
-        case 0:
-            predictedNumber = 4;
-            break;
-        case 6:
-            predictedNumber = 1;
-            break;
-        case 7:
-            predictedNumber = 2;
-            break;
-        case 8:
-            predictedNumber = 3;
-            break;
-        case 9:
-            predictedNumber = 1;
-            break;
-        default:
-            predictedNumber = "Invalid number"; // If an invalid number is entered
-            break;
-    }
-
-    return predictedNumber;
-}
-
-// Main function to handle the process
-function checkPassword() {
-    const password = document.getElementById("passwordInput").value;
-    if (password === "RUDRA") {
-        // Get the 5 winning numbers as a single input (e.g., "18392")
-        let winningNumbersInput = prompt("Enter the 5 winning numbers :");
-
-        // Convert the input string into an array of digits
-        let winningNumbers = winningNumbersInput.split('').map(Number);
-        
-        if (winningNumbers.length !== 5 || winningNumbers.some(isNaN)) {
-            document.getElementById("resultNumber").textContent = "Invalid input! Please enter 5 digits.";
-            return;
+        function toggleIsaka() {
+            const isakaContainer = document.getElementById("isakaContainer");
+            isakaContainer.style.display = isakaContainer.style.display === "none" ? "block" : "none";
         }
-
-        // Calculate the sum of digits for each of the 5 winning numbers
-        let sums = winningNumbers.map(calculateDigitSum);
-
-        // Calculate the final sum (you can customize how the sum is calculated)
-        let totalSum = sums.reduce((acc, sum) => acc + sum, 0);
-        
-        // Derive the jackpot number (for example, you can take the last digit of the total sum)
-        let lastJackpotNumber = totalSum % 10;
-
-        // Get the predicted number based on the jackpot number
-        let predictedNumber = getNextPredictedNumber(lastJackpotNumber);
-
-        // Display the result
-        document.getElementById("resultNumber").textContent = "Predicted Number: " + predictedNumber;
-    } else {
-        document.getElementById("resultNumber").textContent = "PAID KEY FROM I AM WHO ";
-    }
-} ;
-
-
-
-        
     </script>
+
 </body>
 </html>
