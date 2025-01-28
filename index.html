@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game_Hacker</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background: url('https://iphoneswallpapers.com/wp-content/uploads/2023/09/Black-Wolf-iPhone-Wallpaper-4K.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #0567e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+        .container, .player-screen, .login-screen, .winner-screen, .number-screen {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #7652d1;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: #d63601;
+            width: 400px;
+            box-shadow: 0 0 15px 5px #c00404;
+            transition: all 0.3s ease-in-out;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            background: #d10303;
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 10px #ff1500;
+            transition: all 0.2s ease-in-out;
+        }
+        button:hover {
+            background: #cc0000;
+            box-shadow: 0 0 20px #cc0000f3;
+        }
+        select, input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #0a9393;
+            border-radius: 10px;
+            background: #111;
+            color: #e01b05;
+            font-size: 18px;
+        }
+        .premium {
+            background: #111;
+            color: #d70f08;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #df2b02;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #c72103;
+        }
+        .result {
+            font-size: 24px;
+            color: #FF4500;
+            font-weight: bold;
+            text-shadow: 0 0 10px #FF4500;
+        }
+        .hacker-text {
+            font-size: 20px;
+            color: #FF00FF;
+            font-style: italic;
+            text-shadow: 0 0 10px #FF00FF;
+        }
+      
+        .loading {
+            display: none;
+            font-size: 20px;
+            color: #cf1905;
+            font-weight: bold;
+            text-align: center;
+        }
+        .warning {
+            font-size: 18px;
+            color: #FF6347;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen active" id="loginScreen">
+        <h1 class="header">Please Login</h1>
+        <input type="password" id="loginPassword" placeholder="Enter Password" />
+        <button onclick="login()">Login</button>
+        <p id="loginError" class="warning"></p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <h1 class="header">I_Am_Who</h1>
+        <button onclick="goToBigSmall()">Big/Small Prediction</button>
+        <button onclick="goToNumberPrediction()">Number Prediction</button>
+    </div>
+
+    <!-- Player Screen for Big/Small Prediction -->
+    <div class="player-screen" id="playerScreen">
+        <h1 class="header">Big/Small Prediction</h1>
+        <div class="premium">
+            <h2>I_AM_Who</h2>
+            <p id="textview1Player">Loading...</p>
+            <p id="textview2Player">00:00</p>
+        </div>
+        <button onclick="checkBigSmallResult()">Check Big/Small Result</button>
+        <p id="resultPlayer" class="result"></p>
+        <p id="warningPlayer" class="warning"></p>
+        <button onclick="goBackToMain()">Back to Main</button>
+    </div>
+
+    <!-- Winner Screen -->
+    <div class="winner-screen" id="winnerScreen">
+        <h1 class="header">Winner Prediction</h1>
+        <div class="premium">
+            <h2>Winner Results</h2>
+            <p id="textview1Winner">Loading...</p>
+            <p id="textview2Winner">00:00</p>
+        </div>
+        <button onclick="checkWinnerResult()">Check Big/Small Result</button>
+        <p id="resultWinner" class="result"></p>
+        <button onclick="goBackToMain()">Back to Main</button>
+    </div>
+
+    <!-- Number Prediction Screen -->
+    <div class="number-screen" id="numberScreen">
+        <h1 class="header">Number Prediction</h1>
+        <div class="premium">
+            <h2>Enter Password to Predict Number</h2>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Enter</button>
+            <p id="textview1Number">Loading...</p>
+            <p id="textview2Number">00:00</p>
+        </div>
+        <p id="resultNumber" class="result"></p>
+        <p><a href="https://t.me/+SBuJGoDTV9g0ZmM9" target="_blank">CLICK_TO_JOIN_FREE_HACKS</a></p>
+        <button onclick="goBackToMain()">Back to Main</button>
+    </div>
+
+    <script>
+        let lastPeriodNumber = null;
+        let lastResult = null;
+        let numberPrediction = null;
+
+        let patterns = [
+            ["BIG", "BIG", "SMALL", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "SMALL", "BIG", "BIG", "BIG", "BIG", "SMALL", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "BIG", "BIG", "BIG", "SMALL", "SMALL", "SMALL", "BIG", "BIG"],
+            ["SMALL", "BIG", "BIG", "BIG", "SMALL", "SMALL", "BIG", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "BIG", "BIG", "SMALL", "SMALL", "BIG", "BIG", "SMALL", "BIG", "BIG", "BIG", "SMALL", "SMALL", "BIG"],
+            ["BIG", "SMALL", "SMALL", "BIG", "SMALL", "BIG", "BIG", "SMALL", "BIG", "SMALL", "BIG", "BIG", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "BIG", "SMALL", "SMALL", "BIG", "BIG"]
+        ];
+
+        let timer = setInterval(updateTimers, 1000);
+
+        function updateTimers() {
+            const now = new Date();
+            const startHour = 5;
+            const startMinute = 30;
+            const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), startHour, startMinute, 0);
+            const elapsedMillis = now - startTime;
+            const elapsedSeconds = Math.max(0, Math.floor(elapsedMillis / 1000));
+            const totalPeriods = Math.floor(elapsedSeconds / 30);
+            const upcomingPeriod = totalPeriods + 1;
+
+            const formattedDate = now.toISOString().split('T')[0].replace(/-/g, '');
+            const periodNumber = "100005" + String(upcomingPeriod).padStart(4, '0');
+            const textview1Content = formattedDate + periodNumber;
+
+            const remainingSeconds = 30 - (elapsedSeconds % 30);
+            const textview2Content = `00:${String(remainingSeconds).padStart(2, '0')}`;
+
+            document.getElementById("textview1Player").textContent = textview1Content;
+            document.getElementById("textview2Player").textContent = textview2Content;
+
+            document.getElementById("textview1Winner").textContent = textview1Content;
+            document.getElementById("textview2Winner").textContent = textview2Content;
+
+            document.getElementById("textview1Number").textContent = textview1Content;
+            document.getElementById("textview2Number").textContent = textview2Content;
+        }
+
+        function login() {
+            const password = document.getElementById("loginPassword").value;
+            if (password === "0011") {
+                document.getElementById("loginScreen").classList.remove("active");
+                document.getElementById("mainContainer").classList.add("active");
+            } else {
+                document.getElementById("loginError").textContent = "Invalid Password! Please try again.";
+            }
+        }
+
+        function goToBigSmall() {
+            document.getElementById("mainContainer").classList.remove("active");
+            document.getElementById("playerScreen").classList.add("active");
+        }
+
+        function goToNumberPrediction() {
+            document.getElementById("mainContainer").classList.remove("active");
+            document.getElementById("numberScreen").classList.add("active");
+        }
+
+        function goBackToMain() {
+            document.getElementById("playerScreen").classList.remove("active");
+            document.getElementById("winnerScreen").classList.remove("active");
+            document.getElementById("numberScreen").classList.remove("active");
+            document.getElementById("mainContainer").classList.add("active");
+        }
+
+        function checkBigSmallResult() {
+            if (lastPeriodNumber === "1000050001") {
+                document.getElementById("warningPlayer").textContent = "Warning: Period Number hasn't changed.";
+                return;
+            }
+
+            const trend = patterns[Math.floor(Math.random() * patterns.length)];
+            const result = trend[Math.floor(Math.random() * trend.length)];
+            lastResult = result;
+            document.getElementById("resultPlayer").textContent = result;
+            lastPeriodNumber = "1000050001";
+        }
+
+  
+        // Function to calculate the sum of digits of a number
+function calculateDigitSum(number) {
+    return number.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+}
+
+// Function to get the next predicted number based on jackpot number
+function getNextPredictedNumber(lastJackpotNumber) {
+    let predictedNumber;
+    
+    switch (lastJackpotNumber) {
+        case 1:
+            predictedNumber = 2;
+            break;
+        case 2:
+            predictedNumber = 1;
+            break;
+        case 3:
+            predictedNumber = 4;
+            break;
+        case 4:
+            predictedNumber = 3;
+            break;
+        case 5:
+            predictedNumber = 0;
+            break;
+        case 0:
+            predictedNumber = 4;
+            break;
+        case 6:
+            predictedNumber = 1;
+            break;
+        case 7:
+            predictedNumber = 2;
+            break;
+        case 8:
+            predictedNumber = 3;
+            break;
+        case 9:
+            predictedNumber = 1;
+            break;
+        default:
+            predictedNumber = "Invalid number"; // If an invalid number is entered
+            break;
+    }
+
+    return predictedNumber;
+}
+ // Function to calculate the sum of digits of a number
+function calculateDigitSum(number) {
+    return number.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+}
+
+// Function to get the next predicted number based on jackpot number
+function getNextPredictedNumber(lastJackpotNumber) {
+    let predictedNumber;
+    
+    switch (lastJackpotNumber) {
+        case 1:
+            predictedNumber = 2;
+            break;
+        case 2:
+            predictedNumber = 1;
+            break;
+        case 3:
+            predictedNumber = 4;
+            break;
+        case 4:
+            predictedNumber = 3;
+            break;
+        case 5:
+            predictedNumber = 0;
+            break;
+        case 0:
+            predictedNumber = 4;
+            break;
+        case 6:
+            predictedNumber = 1;
+            break;
+        case 7:
+            predictedNumber = 2;
+            break;
+        case 8:
+            predictedNumber = 3;
+            break;
+        case 9:
+            predictedNumber = 1;
+            break;
+        default:
+            predictedNumber = "Invalid number"; // If an invalid number is entered
+            break;
+    }
+
+    return predictedNumber;
+}
+
+// Main function to handle the process
+function checkPassword() {
+    const password = document.getElementById("passwordInput").value;
+    if (password === "RUDRA") {
+        // Get the 5 winning numbers as a single input (e.g., "18392")
+        let winningNumbersInput = prompt("Enter the 5 winning numbers :");
+
+        // Convert the input string into an array of digits
+        let winningNumbers = winningNumbersInput.split('').map(Number);
+        
+        if (winningNumbers.length !== 5 || winningNumbers.some(isNaN)) {
+            document.getElementById("resultNumber").textContent = "Invalid input! Please enter 5 digits.";
+            return;
+        }
+
+        // Calculate the sum of digits for each of the 5 winning numbers
+        let sums = winningNumbers.map(calculateDigitSum);
+
+        // Calculate the final sum (you can customize how the sum is calculated)
+        let totalSum = sums.reduce((acc, sum) => acc + sum, 0);
+        
+        // Derive the jackpot number (for example, you can take the last digit of the total sum)
+        let lastJackpotNumber = totalSum % 10;
+
+        // Get the predicted number based on the jackpot number
+        let predictedNumber = getNextPredictedNumber(lastJackpotNumber);
+
+        // Display the result
+        document.getElementById("resultNumber").textContent = "Predicted Number: " + predictedNumber;
+    } else {
+        document.getElementById("resultNumber").textContent = "PAID KEY FROM I AM WHO ";
+    }
+} ;
+
+
+
+        
+    </script>
+</body>
+</html>
