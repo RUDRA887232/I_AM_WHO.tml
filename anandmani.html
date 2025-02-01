@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>•✨♡🌼•°Ʌ𝙣ค𝙣𝒹𐌼ค𝙣ı ꮶꪊₘค𝗿°•🌼♡✨• - Portfolio</title>
+    <style>
+        body {
+            background-color: #00aaff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: medium;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2em;
+        }
+
+        header nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        section {
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        section h2 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .project-item {
+            background-color: #f4f4f4;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .project-item h3 {
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        #about img {
+            border-radius: 50%;
+        }
+
+        /* Initial hidden portfolio page */
+        #portfolioPage {
+            display: none;
+        }
+
+        /* Styling for login page */
+        .login-container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .login-container input {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+        }
+
+        .login-container button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #555;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <form id="loginForm">
+            <h2>✨＊•̩̩͙*˚𝕨έأc𝚘ʍ૯ ☥𝚘*°Ʌ𝙣ค𝙣𝒹𐌼ค𝙣ı ꮶꪊₘค𝗿°•♡✨</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p id="errorMessage" class="error"></p>
+        </form>
+    </div>
+
+    <!-- Portfolio Page -->
+    <div id="portfolioPage">
+        <header>
+            <h1>✿ ¦ 𝗔𝕟ªȵԀ𝒎ᵅꪦ𝖎 κᵘᵐᵅ𝖗 ¦</h1>
+            <p>Computer Science and Data Analysis | Aspiring Data Scientist</p>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+        <section id="about" class="about">
+          <h2>♡•☆₳𝔟ⲟᶹ☥𝗲 𝑚𝗲♡•☆👋</h2>
+          <img src="https://anandmanikumar.github.io/Portfolio-Website/anand.jpeg" alt="✨♡🌼•°Ʌ𝙣ค𝙣𝒹𐌼ค𝙣ı ꮶꪊₘค𝗿°•🌼♡✨" height="250">
+          <p><small>Hello, I'm Anandmani Kumar!</small>
+              <mark> Welcome to my portfolio!</mark> I'm a 2nd-year BSc Computer Science and Data Analysis student at IIT Patna. With a
+              strong foundation in machine learning, data analysis, and programming, I’m passionate about solving complex
+              problems using data-driven approaches.
+    
+              My projects range from implementing machine learning models to developing innovative applications in Python,
+              showcasing my skills in libraries like NumPy, Pandas, and Scikit-learn. I’ve also explored cutting-edge
+              technologies like NLP Cloud and object-oriented programming for building practical solutions.
+    
+              Beyond academics, I'm an active member of the Training and Placement Cell at IIT Patna, where I contribute
+              to data cleaning and integration processes. My journey also includes experience in cricket, where I proudly
+              represented my district at the U19 level.
+          </p>
+      </section>
+      <section id="education" class="education">
+        <h2>Education</h2>
+        <div class="education-item" style="background-color: #40E0D0;">
+            <h3>Indian Institute of Technology (IIT), Patna</h3>
+            <p><strong>Degree:</strong> BSc in Computer Science and Data Analysis</p>
+            <p><strong>Year:</strong> 2023 - Present</p>
+            <p><strong>Key Achievements:</strong></p>
+            <ul>
+                <li>1st Semester <b>SPI: 7.74, CPI: 7.74</b></li>
+                <li>2nd Semester <strong>SPI: 9.36, CPI: 8.56</strong></li>
+                <li>3rd Semester <b>SPI: 9.74, CPI: 8.95</b></li>
+            </ul>
+        </div>
+        <div class="education-item">
+            <h3>U19 Cricket Experience</h3>
+            <p><strong>Represented:</strong> Darbhanga District</p>
+            <p><strong>Years:</strong> 2019 - 2022</p>
+        </div>
+    </section>
+    
+    <section id="projects" class="projects">
+        <h2>Projects</h2>
+        <div class="project-item">
+            <h3>Face Recognition Attendance System</h3>
+            <p><strong>Objective:</strong> Automate attendance tracking using facial recognition.</p>
+            <p><strong>Technologies:</strong> OpenCV, NumPy, Python, Face Recognition Library.</p>
+            <p><strong>Features:</strong>
+                <ul>
+                    <li>Captures and detects faces in real-time.</li>
+                    <li>Compares detected faces with stored images to mark attendance.</li>
+                    <li>Saves attendance data in CSV format.</li>
+                </ul>
+            </p>
+        </div>
+        
+        <div class="project-item">
+            <h3>Chatbot with NLP</h3>
+            <p><strong>Objective:</strong> Build an interactive chatbot capable of answering user queries.</p>
+            <p><strong>Technologies:</strong> Python, NLTK, NLP Cloud API, Transformers.</p>
+            <p><strong>Features:</strong>
+                <ul>
+                    <li>Understands user queries using NLP.</li>
+                    <li>Retrieves relevant answers using a knowledge base.</li>
+                    <li>Implements Named Entity Recognition (NER) for better responses.</li>
+                </ul>
+            </p>
+        </div>
+        
+        <div class="project-item">
+            <h3>Portfolio Analysis Tool</h3>
+            <p><strong>Objective:</strong> Analyze a two-stock portfolio’s risk and return.</p>
+            <p><strong>Technologies:</strong> Python, Pandas, NumPy, Matplotlib.</p>
+            <p><strong>Features:</strong>
+                <ul>
+                    <li>Computes individual stock returns and risks (standard deviation).</li>
+                    <li>Calculates covariance between stocks.</li>
+                    <li>Determines portfolio expected return and risk based on weights.</li>
+                    <li>Visualizes diversification benefits.</li>
+                </ul>
+            </p>
+        </div>
+        
+        <div class="project-item">
+            <h3>Gradient Descent Visualization for Linear Regression</h3>
+            <p><strong>Objective:</strong> Demonstrate how gradient descent optimizes linear regression models.</p>
+            <p><strong>Technologies:</strong> Python, Matplotlib, SciPy, NumPy.</p>
+            <p><strong>Features:</strong>
+                <ul>
+                    <li>Plots cost function convergence.</li>
+                    <li>Shows how learning rate affects convergence speed.</li>
+                    <li>Visualizes step-wise parameter updates.</li>
+                </ul>
+            </p>
+        </div>
+        
+        <div class="project-item">
+            <h3>WHO COVID-19 Cases Analysis</h3>
+            <p><strong>Objective:</strong> Analyze COVID-19 case trends worldwide.</p>
+            <p><strong>Technologies:</strong> Python, Pandas, Matplotlib, Seaborn.</p>
+            <p><strong>Features:</strong>
+                <ul>
+                    <li>Cleaned and preprocessed WHO COVID-19 dataset.</li>
+                    <li>Performed trend analysis on cases and deaths.</li>
+                    <li>Created heatmaps and time-series visualizations.</li>
+                </ul>
+            </p>
+        </div>
+        
+        <div class="project-item">
+            <h3>NLP-Based Application</h3>
+            <p><strong>Objective:</strong> Develop an NLP-powered tool for Named Entity Recognition (NER), Sentiment Analysis, and Code Generation.</p>
+            <p><strong>Technologies:</strong> Python, NLP Cloud API, Flask, Pandas.</p>
+            <p><strong>Features:</strong>
+                <ul>
+                    <li>Implements user authentication for secure access.</li>
+                    <li>Provides NER and sentiment analysis functionalities.</li>
+                    <li>Generates code snippets based on user input.</li>
+                    <li>Future Scope: Text summarization, keyword extraction.</li>
+                </ul>
+            </p>
+        </div>
+        <a href="https://github.com/anandmani123" class="btn">View More on GitHub</a>
+    </section>
+    
+    <section id="contact" class="contact">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:anandmanilalkumar@gmail.com">anandmanilalkumar@gmail.com</a></p>
+        <p>Phone: 9631316393</p>
+        <p>Location: Darbhanga, Bihar</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/anandmani-kumar-55b2102aa"> LinkedIn </a></p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 •✨♡🌼•°Ʌ𝙣ค𝙣𝒹𐌼ค𝙣ı ꮶꪊₘค𝗿°•🌼♡✨•. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const correctUsername = "1234";
+        const correctPassword = "1234";
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("errorMessage");
+            if (username === correctUsername && password === correctPassword) {
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("portfolioPage").style.display = "block";
+            } else {
+                errorMessage.textContent = "Invalid username or password. Please try again.";
+            }
+        });
+    </script>
+</body>
+</html>
