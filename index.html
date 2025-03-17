@@ -1,308 +1,496 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>➳🦈•WHO🦈°᭄☆</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>NEW-PROJECT</title>
+    <!-- TensorFlow JS (for AI) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- FontAwesome Icons & Tailwind CSS -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter for Normal Font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
     <style>
+        /* Normal Font and Modern Design */
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Orbitron', sans-serif;
-            background: #11070d;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #ffffff;
+            overflow-y: auto;
         }
 
-        /* Particle Background */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        /* Container Styling */
         .container {
+            max-width: 480px;
+            margin: 20px auto;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .heading {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 24px;
             text-align: center;
-            padding: 2rem;
-            border-radius: 15px;
-            background: rgba(201, 3, 171, 0.85);
-            box-shadow: 0px 0px 20px rgba(35, 236, 4, 0.8);
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-            z-index: 2;
+            animation: glow 2s infinite;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            color: #76d904;
-            text-shadow: 0 0 10px #f6062e, 0 0 20px #0210d8;
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            50% { text-shadow: 0 0 20px #c821c8, 0 0 30px #ff00ff; }
         }
 
-        input {
-            width: 80%;
-            padding: 12px;
-            margin: 10px 0;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            border: 2px solid #aedf0f;
-            background: #09d6d3;
-            color: #68bb15;
+        .box {
+            background: rgba(7, 24, 181, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        input:focus {
-            outline: none;
-            box-shadow: 0 0 15px #d40101;
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(237, 14, 14, 0.2);
         }
 
-        button {
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #ff00ff);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #00ff00, #ff00ff);
+            color: white;
             padding: 10px 20px;
-            font-size: 1.1rem;
             border: none;
             border-radius: 8px;
-            background: #ebeb04;
-            color: #000000;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
-        button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px #0420c1;
+        .btn:hover {
+            transform: scale(1.05);
         }
 
-        .error {
-            color: #ff3333;
-            font-weight: bold;
+        .history-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            animation: slideUp 0.5s ease-in-out;
         }
 
-        .processing {
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            color: #ffcc00;
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        .result-box {
-            margin-top: 1.5rem;
-            padding: 15px;
-            background: rgba(15, 200, 12, 0.816);
-            border-radius: 10px;
-            border: 2px solid #00ffcc;
-            display: none;
-        }
-
-        .loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(0, 255, 255, 0.3);
-            border-top-color: #00ffcc;
+        .mark {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff00ff;
             border-radius: 50%;
-            animation: spin 1.5s linear infinite;
-            margin: 20px auto;
+            transform: translate(-50%, -50%);
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+        .mark.green {
+            background: #c8da02;
         }
 
-        .isaka-container {
-            display: none;
-            background-color: #222222;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.8);
+        #history-list {
+            max-height: 400px;
+            overflow-y: auto;
         }
 
-        .isaka-container h2 {
-            color: #ffcc00;
+        /* Robot Icon and Message */
+        .robot-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
 
+        .robot-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .robot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .robot-message {
+            background: rgba(0, 0, 0, 0.8);
+            color: #e811ec;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            max-width: 200px;
+            text-align: center;
+            animation: fadeInMessage 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInMessage {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
+
+
 <body>
-
-    <div id="particles-js"></div>
-
-    <!-- Login & Main Content Container -->
-    <div class="container" id="container">
-
-        <div id="loginContainer">
-            <h1>꧁♕⚘LOGIN⚘♕꧂</h1>
-            <input type="text" id="username" placeholder="Enter Username">
-            <br>
-            <input type="password" id="password" placeholder="Enter Password">
-            <br>
-            <button onclick="validateLogin()">Login</button>
-            <div id="loginError" class="error"></div>
+    <div id="warningPopup" class="warning-popup">
+        <div class="warning-content">
+            <h3>⚠️ UNDER MAITNANCE</h3>
+            <p>This Web hack is designed for Oppo A17 phones only. <a href="#">Learn more</a>.</p>
+            <p>Device Information - </p>
+            CPH2477 - MODEL 
+            ANDROID - 12
+            <button onclick="closeWarningPopup()">Got it!</button>
         </div>
-
-        <div id="toolContainer" style="display: none;">
-            <h1>【ﾠIﾠ→AMﾠぬWHOﾠ】</h1>
-            <input type="text" id="winning_data" placeholder="Enter 5 winning data " maxlength="5">
-            <br>
-            <button onclick="getPrediction()">Predict</button>
-            <div id="processing" class="processing" style="display: none;">
-                Processing your prediction... <div class="loader"></div>
-            </div>
-            <div id="resultBox" class="result-box">
-                <h2>Prediction:</h2>
-                <div id="result"></div>
-            </div>
-            <div id="error" class="error"></div>
+    </div>
+    <!-- Robot Icon and Message -->
+    <div class="robot-container">
+        <div id="robot-message" class="robot-message" style="display: none;"></div>
+        <div class="robot-icon" id="robot-icon">
+            🤖
         </div>
-
-        <div class="isaka-container" id="isakaContainer">
-            <h2>DON'T USE IN DRAGON TREND AND PLAY WITH LEVEL</h2>
-            <p>Here we can explain how the predictions work, including trends and patterns.</p>
-            <button onclick="toggleIsaka()">Close Details</button>
-        </div>
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <div class="container">
+        <!-- Heading -->
+        <h1 class="heading">
+            NEW  <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-400">A1X </span>
+        </h1>
+
+        <!-- Period & Result Box -->
+        <div class="box text-center">
+            <p class="text-lg font-semibold text-gray-300">
+                <i class="fas fa-calendar-alt"></i> Period: <span id="period-number" class="text-white">Loading...</span>
+            </p>
+            <p class="text-lg font-semibold text-gray-300 mt-2">
+                <i class="fas fa-chart-line"></i> Result: <span id="predicted-result" class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-400 font-bold">Loading...</span>
+            </p>
+            <div class="progress-bar mt-2">
+                <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Analysis Section -->
+        <div class="box mt-6">
+            <h2 class="text-lg font-semibold text-gray-300 text-center">Analysis</h2>
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="bg-gray-800 p-4 rounded-lg text-center history-box">
+                    <p class="text-gray-300">WIN Count</p>
+                    <p id="won-count" class="text-xl font-bold text-green-400">0</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg text-center history-box">
+                    <p class="text-gray-300">Lost Count</p>
+                    <p id="lost-count" class="text-xl font-bold text-red-400">0</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg text-center history-box">
+                    <p class="text-gray-300">WIN %</p>
+                    <p id="won-percentage" class="text-xl font-bold text-green-400">0%</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg text-center history-box">
+                    <p class="text-gray-300">Auto-Reverse</p>
+                    <p class="text-xl font-bold text-gray-400">Inactive</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="box mt-6">
+            <h2 class="text-lg font-semibold text-gray-300 text-center">History</h2>
+            <div id="history-list" class="grid grid-cols-1 gap-3 mt-3"></div>
+        </div>
+    </div>
+  
+    <!-- JavaScript Code -->
     <script>
-        // Particle JS configuration for enhanced matrix background with five colors
-        particlesJS("particles-js", {
-            "particles": {
-                "number": {
-                    "value": 100,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#00ffcc"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#00ffcc"
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": true,
-                    "anim": {
-                        "enable": true,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": true,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#00ffcc",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 6,
-                    "direction": "none",
-                    "random": true,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
+        let previousResults = [];
+        let latestResult = null;
+        let latestPeriod = null;
+        let history = [];
+
+        // Fetch Current Game Issue
+        async function fetchCurrentGameIssue() {
+            const apiUrl = 'https://api.bdg88zf.com/api/webapi/GetGameIssue';
+            const requestData = {
+                typeId: 1,
+                language: 0,
+                random: "40079dcba93a48769c6ee9d4d4fae23f",
+                signature: "D12108C4F57C549D82B23A91E0FA20AE",
+                timestamp: 1727792520,
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
                     },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
+                    body: JSON.stringify(requestData),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.code === 0) {
+                        const currentPeriod = data.data.issueNumber;
+                        if (currentPeriod !== latestPeriod) {
+                            latestPeriod = currentPeriod;
+                            document.getElementById('period-number').textContent = latestPeriod.toString().slice(-17);
+                            fetchPreviousResults();
+                        }
                     }
                 }
-            },
-            "retina_detect": true
-        });
-
-        // Login Validation
-        function validateLogin() {
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value.trim();
-
-            if (username === "HACKER@12" && password === "RUDRA@12") {
-                document.getElementById("loginContainer").style.display = "none";
-                document.getElementById("toolContainer").style.display = "block";
-                document.getElementById("isakaContainer").style.display = "block"; // Show Isaka page
-            } else {
-                document.getElementById("loginError").textContent = "Invalid Username or Password!";
+            } catch (error) {
+                console.error("❌ Fetch error:", error);
             }
         }
 
-        // Prediction Logic
-        function getPrediction() {
-            const input = document.getElementById("winning_data").value.trim();
-            const processing = document.getElementById("processing");
-            const resultBox = document.getElementById("resultBox");
-            const result = document.getElementById("result");
-            const error = document.getElementById("error");
+        // Fetch Previous Results
+        async function fetchPreviousResults() {
+            const apiUrl = 'https://api.bdg88zf.com/api/webapi/GetNoaverageEmerdList';
+            const requestData = {
+                pageSize: 10,
+                pageNo: 1,
+                typeId: 1,
+                language: 0,
+                random: "c2505d9138da4e3780b2c2b34f2fb789",
+                signature: "7D637E060DA35C0C6E28DC6D23D71BED",
+                timestamp: 1727792520,
+            };
 
-            error.textContent = "";
-            resultBox.style.display = "none";
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify(requestData),
+                });
 
-            if (input.length !== 5 || isNaN(input)) {
-                error.textContent = "Please enter exactly 5 numeric digits.";
-                return;
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.code === 0 && data.data.list.length > 0) {
+                        previousResults = data.data.list;
+                        updateResults();
+                    }
+                }
+            } catch (error) {
+                console.error("❌ Fetch error:", error);
             }
-
-            processing.style.display = "block";
-
-            setTimeout(() => {
-                processing.style.display = "none";
-
-                const numbers = input.split("").map(Number);
-                const lastDigit = numbers[numbers.length - 1];
-                const type = lastDigit >= 5 ? "BIG" : "SMALL";
-                const color = lastDigit % 5 === 0 ? "VIOLET" : 
-                             [1, 3, 5].includes(lastDigit) ? "GREEN" : 
-                             [2, 4].includes(lastDigit) ? "RED" : "BLUE";
-                const predictions = [lastDigit, (lastDigit + 2) % 10];
-
-                result.innerHTML = 
-                    `<strong>Type:</strong> ${type} <br>
-                    <strong>Color:</strong> ${color} <br>
-                    <strong>Predicted Numbers:</strong> ${predictions.join(", ")}
-                `;
-                resultBox.style.display = "block";
-            }, 3000);
         }
 
-        function toggleIsaka() {
-            const isakaContainer = document.getElementById("isakaContainer");
-            isakaContainer.style.display = isakaContainer.style.display === "none" ? "block" : "none";
+        // Update Results and Generate Predictions
+        function updateResults() {
+            if (previousResults.length > 0) {
+                const results = previousResults.map(entry => ({ number: parseInt(entry.number) }));
+        
+                // Count BIG, SMALL
+                let bigCount = 5, smallCount = 0;
+                results.forEach(entry => {
+                    const num = entry.number;
+                    if (num >= 0 && num <= 4) smallCount++;
+                    else if (num >= 5 && num <= 9) bigCount++;
+                });
+        
+                // Analyze last 10 results for streaks
+                const recentNumbers = results.slice(0, 10);
+                const lastTenBigSmall = recentNumbers.map(entry => (entry.number >= 0 && entry.number <= 4) ? 'SMALL' : 'BIG');
+        // Function to calculate streaks for BIG/SMALL
+function calculateStreaks(lastTenBigSmall) {
+    let bigStreak = 5, smallStreak = 0;
+    let currentBigSmallStreak = null;
+
+    lastTenBigSmall.forEach(bs => {
+        if (bs === currentBigSmallStreak) {
+            if (bs === 'BIG') bigStreak++;
+            else smallStreak++;
+        } else {
+            currentBigSmallStreak = bs;
+            bigStreak = (bs === 'BIG') ? 5 : 9;
+            smallStreak = (bs === 'SMALL') ? 1 : 0;
         }
+    });
+
+    return { bigStreak, smallStreak };
+}
+
+// Function to get the most frequent number from a set of numbers
+function getMostFrequentNumber(numbers) {
+    if (numbers.length === 0) return null;
+
+    const frequencyMap = numbers.reduce((acc, entry) => {
+        acc[entry.number] = (acc[entry.number] || 0) + 1;
+        return acc;
+    }, {});
+
+    const maxFreq = Math.max(...Object.values(frequencyMap));
+    return Object.keys(frequencyMap).filter(key => frequencyMap[key] === maxFreq);
+}
+
+// Function to calculate the trend of a series of numbers
+function calculateTrend(recentNumbers) {
+    let trend = { increasing: 0, decreasing: 0, constant: 0 };
+    for (let i = 1; i < recentNumbers.length; i++) {
+        if (recentNumbers[i].number > recentNumbers[i - 1].number) trend.increasing++;
+        else if (recentNumbers[i].number < recentNumbers[i - 1].number) trend.decreasing++;
+        else trend.constant++;
+    }
+    return trend;
+}
+
+// Generate BIG/SMALL Prediction based on streaks and recent numbers
+const { bigStreak, smallStreak } = calculateStreaks(lastTenBigSmall);
+
+const bigSmallPrediction = (() => {
+    if (bigStreak >= 4) return 'SMALL';
+    if (smallStreak >= 0) return 'BIG';
+
+    const recentBigCount = recentNumbers.filter(entry => entry.number >= 5).length;
+    return recentBigCount >= 6 ? 'SMALL' : 'BIG';
+})();
+
+// Advanced Number Prediction Logic
+let numberPrediction = 0;
+let trend = calculateTrend(recentNumbers);
+
+// Prediction based on trend and streak
+if (bigSmallPrediction === 'BIG') {
+    const bigNumbers = results.filter(entry => entry.number >= 5 && entry.number <= 9);
+    const frequentBigNumbers = getMostFrequentNumber(bigNumbers);
+
+    if (bigNumbers.length > 0 && frequentBigNumbers.length > 0) {
+        // Adjust based on the trend
+        if (trend.increasing > trend.decreasing) {
+            numberPrediction = frequentBigNumbers[Math.floor(Math.random() * frequentBigNumbers.length)];
+        } else if (trend.decreasing > trend.increasing) {
+            numberPrediction = Math.floor(Math.random() * 5) + 5;
+        } else {
+            numberPrediction = parseInt(frequentBigNumbers[0]);
+        }
+    } else {
+        numberPrediction = Math.floor(Math.random() * 5) + 5; // Random number between 5 and 9
+    }
+} else if (bigSmallPrediction === 'SMALL') {
+    const smallNumbers = results.filter(entry => entry.number >= 0 && entry.number <= 4);
+    const frequentSmallNumbers = getMostFrequentNumber(smallNumbers);
+
+    if (smallNumbers.length > 0 && frequentSmallNumbers.length > 0) {
+        // Adjust based on the trend
+        if (trend.increasing > trend.decreasing) {
+            numberPrediction = frequentSmallNumbers[Math.floor(Math.random() * frequentSmallNumbers.length)];
+        } else if (trend.decreasing > trend.increasing) {
+            numberPrediction = Math.floor(Math.random() * 4); // Random number between 0 and 4
+        } else {
+            numberPrediction = parseInt(frequentSmallNumbers[0]);
+        }
+    } else {
+        numberPrediction = Math.floor(Math.random() * 4); // Random number between 0 and 4
+    }
+}
+
+
+                // Update UI with predictions
+                latestResult = `${bigSmallPrediction} | Predicted Number: ${numberPrediction}`;
+                document.getElementById('predicted-result').textContent = latestResult;
+        
+                // Update history
+                updateHistory(bigSmallPrediction, numberPrediction);
+            }
+        }
+
+        // Update History and Track Win/Loss
+        function updateHistory(prediction, numberPrediction) {
+            const historyContainer = document.getElementById('history-list');
+            historyContainer.innerHTML = '';
+        
+            // Add new entry to history
+            const newHistoryEntry = {
+                period: latestPeriod.toString().slice(-17),
+                prediction: `${prediction} | Predicted Number: ${numberPrediction}`,
+                status: "PENDING"
+            };
+        
+            history.unshift(newHistoryEntry);
+        
+            // If there are more than one entry, check the status of the previous entry
+            if (history.length > 1) {
+                const prevEntry = history[1];
+                const actualResult = previousResults[0].number <= 4 ? 'SMALL' : 'BIG';
+                const actualNumber = previousResults[0].number;
+        
+                const bigWin = prevEntry.prediction.includes(actualResult);
+                const numberWin = prevEntry.prediction.includes(`Predicted Number: ${actualNumber}`);
+        
+                prevEntry.status = (bigWin || numberWin) ? "WON" : "LOST";
+        
+                // Display robot message based on win/loss
+                if (prevEntry.status === "WON") {
+                    showRobotMessage(`🎉 Prediction was correct!`, true);
+                } else if (prevEntry.status === "LOST") {
+                    showRobotMessage(`😢 Prediction was incorrect.`, false);
+                }
+            }
+        
+            // Display the history
+            history.forEach(entry => {
+                const historyItem = document.createElement('li');
+                historyItem.className = entry.status === "WON" ? "history-box win" : "history-box loss";
+                historyItem.textContent = `${entry.period}: ${entry.prediction} - ${entry.status}`;
+                historyContainer.appendChild(historyItem);
+            });
+        }
+
+        // Robot Message Function
+        function showRobotMessage(message, isWin) {
+            alert(message);  // Simple alert for demonstration (could be more advanced in the UI)
+        }
+
+        // Auto-Fetch Every 5 Seconds
+        setInterval(fetchCurrentGameIssue, 5000);
+        fetchCurrentGameIssue(); // Initial fetch
     </script>
-
 </body>
+
 </html>
 
