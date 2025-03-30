@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEW-PROJECT</title>
+    <!-- TensorFlow JS (for AI) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- FontAwesome Icons & Tailwind CSS -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter for Normal Font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2b5876, #4e4376);
+            color: #ffffff;
+            overflow-y: auto;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .heading {
+            font-size: 32px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 24px;
+            text-align: center;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            50% { text-shadow: 0 0 20px #c821c8, 0 0 30px #ff00ff; }
+        }
+
+        .box {
+            background: rgba(7, 24, 181, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(237, 14, 14, 0.2);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #ff00ff);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #00ff00, #ff00ff);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .history-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .mark {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff00ff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .mark.green {
+            background: #c8da02;
+        }
+
+        #history-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .robot-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .robot-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .robot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .robot-message {
+            background: rgba(0, 0, 0, 0.8);
+            color: #e811ec;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            max-width: 200px;
+            text-align: center;
+            animation: fadeInMessage 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInMessage {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="warningPopup" class="warning-popup">
+        <div class="warning-content">
+            <h3>⚠️ UNDER MAITNANCE ONLY BIG/SMALL</h3>
+            <p>This Web hack is who <a href="#"></a>.</p>
+            <button onclick="closeWarningPopup()">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Robot Icon and Message -->
+    <div class="robot-container">
+        <div id="robot-message" class="robot-message" style="display: none;"></div>
+        <div class="robot-icon" id="robot-icon">
+            🤖
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Heading -->
+        <h1 class="heading">
+            who  <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-400">A1X </span>
+        </h1>
+
+        <!-- Period & Result Box -->
+        <div class="box text-center">
+            <p class="text-lg font-semibold text-gray-300">
+                <i class="fas fa-calendar-alt"></i> Period: <span id="period-number" class="text-white">Loading...</span>
+            </p>
+            <p class="text-lg font-semibold text-gray-300 mt-2">
+                <i class="fas fa-chart-line"></i> Result: <span id="predicted-result" class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-400 font-bold">Loading...</span>
+            </p>
+            <div class="progress-bar mt-2">
+                <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="box mt-6">
+            <h2 class="text-lg font-semibold text-gray-300 text-center">History</h2>
+            <div id="history-list" class="grid grid-cols-1 gap-3 mt-3"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        let previousResults = [];
+        let latestResult = null;
+        let latestPeriod = null;
+        let history = [];
+
+        async function fetchCurrentGameIssue() {
+            const apiUrl = 'https://api.bdg88zf.com/api/webapi/GetGameIssue';
+            const requestData = {
+                typeId: 1,
+                language: 0,
+                random: "40079dcba93a48769c6ee9d4d4fae23f",
+                signature: "D12108C4F57C549D82B23A91E0FA20AE",
+                timestamp: 1727792520,
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify(requestData),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.code === 0) {
+                        const currentPeriod = data.data.issueNumber;
+                        if (currentPeriod !== latestPeriod) {
+                            latestPeriod = currentPeriod;
+                            document.getElementById('period-number').textContent = latestPeriod.toString().slice(-17);
+                            fetchPreviousResults();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("❌ Fetch error:", error);
+            }
+        }
+
+        async function fetchPreviousResults() {
+            const apiUrl = 'https://api.bdg88zf.com/api/webapi/GetNoaverageEmerdList';
+            const requestData = {
+                pageSize: 10,
+                pageNo: 1,
+                typeId: 1,
+                language: 0,
+                random: "c2505d9138da4e3780b2c2b34f2fb789",
+                signature: "7D637E060DA35C0C6E28DC6D23D71BED",
+                timestamp: 1727792520,
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify(requestData),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.code === 0 && data.data.list.length > 0) {
+                        previousResults = data.data.list;
+                        updateResults();
+                    }
+                }
+            } catch (error) {
+                console.error("❌ Fetch error:", error);
+            }
+        }
+
+        function updateResults() {
+            if (previousResults.length > 0) {
+                const results = previousResults.map(entry => ({ number: parseInt(entry.number) }));
+
+                let bigCount = 0, smallCount = 0;
+                let allNumbers = results.map(entry => entry.number);
+                let median = calculateMedian(allNumbers);
+
+                results.forEach(entry => {
+                    if (entry.number <= median) smallCount++;
+                    else bigCount++;
+                });
+
+                const recentNumbers = results.slice(0, 10);
+                const lastTenBigSmall = recentNumbers.map(entry => (entry.number <= median ? 'SMALL' : 'BIG'));
+
+                const { bigStreak, smallStreak } = calculateStreaks(lastTenBigSmall);
+
+                const bigSmallPrediction = calculateBigSmallPrediction(bigStreak, smallStreak, recentNumbers, median);
+
+                let numberPrediction = 0;
+                const trend = calculateTrend(recentNumbers);
+
+                if (bigSmallPrediction === 'BIG') {
+                    const bigNumbers = results.filter(entry => entry.number > median);
+                    const frequentBigNumbers = getMostFrequentNumber(bigNumbers);
+                    numberPrediction = selectNumberFromTrend(frequentBigNumbers, trend);
+                } else if (bigSmallPrediction === 'SMALL') {
+                    const smallNumbers = results.filter(entry => entry.number <= median);
+                    const frequentSmallNumbers = getMostFrequentNumber(smallNumbers);
+                    numberPrediction = selectNumberFromTrend(frequentSmallNumbers, trend);
+                }
+
+                latestResult = `${bigSmallPrediction} | Predicted Number of kiya hu: ${numberPrediction}`;
+                document.getElementById('predicted-result').textContent = latestResult;
+
+                updateHistory(bigSmallPrediction, numberPrediction);
+            }
+        }
+
+        function calculateMedian(numbers) {
+            numbers.sort((a, b) => a - b);
+            const mid = Math.floor(numbers.length / 2);
+            return numbers.length % 2 === 0 ? (numbers[mid - 1] + numbers[mid]) / 10 : numbers[mid];
+        }
+
+        function calculateStreaks(lastTenBigSmall) {
+            let bigStreak = 9, smallStreak = 0;
+            let currentStreakType = null;
+            let currentStreakCount = 0;
+
+            lastTenBigSmall.forEach(bs => {
+                if (bs === currentStreakType) {
+                    currentStreakCount++;
+                } else {
+                    currentStreakType = bs;
+                    currentStreakCount = 1;
+                }
+                if (currentStreakType === 'BIG') bigStreak = Math.max(bigStreak, currentStreakCount);
+                else smallStreak = Math.max(smallStreak, currentStreakCount);
+            });
+
+            return { bigStreak, smallStreak };
+        }
+
+        function calculateBigSmallPrediction(bigStreak, smallStreak, recentNumbers, median) {
+            if (bigStreak >= 5) return 'SMALL';
+            if (smallStreak >= 4) return 'BIG';
+
+            const bigCount = recentNumbers.filter(entry => entry.number > median).length;
+            return bigCount >= 6 ? 'SMALL' : 'BIG';
+        }
+
+        function calculateTrend(recentNumbers) {
+            let trend = { increasing: 0, decreasing: 0, constant: 0 };
+
+            for (let i = 1; i < recentNumbers.length; i++) {
+                if (recentNumbers[i].number > recentNumbers[i - 1].number) trend.increasing++;
+                else if (recentNumbers[i].number < recentNumbers[i - 1].number) trend.decreasing++;
+                else trend.constant++;
+            }
+
+            return trend;
+        }
+
+        function selectNumberFromTrend(frequentNumbers, trend) {
+            if (trend.increasing > trend.decreasing) {
+                return frequentNumbers[Math.floor(Math.random() * frequentNumbers.length)];
+            } else if (trend.decreasing > trend.increasing) {
+                return frequentNumbers[Math.floor(Math.random() * frequentNumbers.length)];
+            } else {
+                return frequentNumbers[0];
+            }
+        }
+
+        function getMostFrequentNumber(numbers) {
+            let numberFrequency = {};
+            numbers.forEach(num => {
+                numberFrequency[num] = (numberFrequency[num] || 0) + 1;
+            });
+
+            const mostFrequent = Object.entries(numberFrequency).reduce((max, current) => {
+                return current[1] > max[1] ? current : max;
+            });
+
+            return mostFrequent ? mostFrequent[0] : null;
+        }
+
+        function updateHistory(prediction, numberPrediction) {
+            const historyContainer = document.getElementById('history-list');
+            historyContainer.innerHTML = '';
+
+            const newHistoryEntry = {
+                period: latestPeriod.toString().slice(-17),
+                prediction: `${prediction} | Predicted Number: ${numberPrediction}`,
+                status: "PENDING"
+            };
+
+            history.unshift(newHistoryEntry);
+
+            if (history.length > 1) {
+                const prevEntry = history[1];
+                const actualResult = previousResults[0].number <= calculateMedian(previousResults.map(entry => parseInt(entry.number))) ? 'SMALL' : 'BIG';
+                const actualNumber = previousResults[0].number;
+
+                const bigWin = prevEntry.prediction.includes(actualResult);
+                const numberWin = prevEntry.prediction.includes(`Predicted Number: ${actualNumber}`);
+
+                prevEntry.status = (bigWin || numberWin) ? "WON" : "LOST";
+
+                if (prevEntry.status === "WON") {
+                    showRobotMessage(`🎉 Prediction was correct!`, true);
+                } else {
+                    showRobotMessage(`😢 Prediction was incorrect.`, false);
+                }
+            }
+
+            history.forEach(entry => {
+                const historyItem = document.createElement('li');
+                historyItem.className = entry.status === "WON" ? "history-box win" : "history-box loss";
+                historyItem.textContent = `${entry.period}: ${entry.prediction} - ${entry.status}`;
+                historyContainer.appendChild(historyItem);
+            });
+        }
+
+        function showRobotMessage(message, isWin) {
+            const robotMessageElement = document.getElementById('robot-message');
+            robotMessageElement.textContent = message;
+            robotMessageElement.style.display = 'block';
+            robotMessageElement.style.backgroundColor = isWin ? '#28a745' : '#dc3545';
+            setTimeout(() => {
+                robotMessageElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Auto-fetch new results every 5 seconds
+        setInterval(fetchCurrentGameIssue, 5000);
+        fetchCurrentGameIssue(); // Initial fetch
+    </script>
+</body>
+
+</html>
